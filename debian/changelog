@@ -1,0 +1,31 @@
+libssh2 (0.18-1) unstable; urgency=low
+
+  * New upstream release
+    - Removed 'CVS directories in tarball' lintian override.
+  
+  - Added patch fixing the syntactic errors in manpages.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Sun, 11 Nov 2007 17:16:34 +0600
+
+libssh2 (0.17-1) unstable; urgency=low
+
+  * New upstream release (Closes: #409362, #430569):
+    * ABI change: soname changed (adding Conflicts and Replaces to new
+      -dev package)
+    * installing more documentation.
+    * added lintian override: CVS directory accidentally went in release
+      tarball.
+  * Build using libgcrypt, not OpenSSL (Closes: #409362).
+  * Quilt introduced to manage patches:
+    * Added patch disabling compilation of example.
+  * Watch file added.
+  * ${Source-Version} changed to ${binary:Version}: makes lintian happy
+    and allows binNMUs.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Wed, 04 Jul 2007 15:21:46 +0700
+
+libssh2 (0.14+20070102-1) unstable; urgency=low
+
+  * Initial release (Closes: #403446).
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Tue,  2 Jan 2007 03:17:15 +0600

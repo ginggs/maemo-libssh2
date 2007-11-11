@@ -1,0 +1,57 @@
+Source: libssh2
+Section: libs
+Priority: optional
+Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
+Build-Depends: debhelper (>= 5), autotools-dev, libgcrypt11-dev, zlib1g-dev, quilt (>= 0.40)
+Standards-Version: 3.7.2
+
+Package: libssh2-1
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: SSH2 client-side library
+ libssh2 is the thin library implementing client side of SSH2 protocol
+ as defined by Internet Drafts SECSH-TRANS, SECSH-USERAUTH,
+ SECSH-CONNECTION, SECSH-ARCH, SECSH-FILEXFER, SECSH-DHGEX,
+ SECSH-NUMBERS, and SECSH-PUBLICKEY
+ .
+ This boils down to the regular terminal, scp and SFTP sessions; port
+ forwarding; password, key-based and keyboard-interactive
+ authentication.
+ .
+ This package contains the library.
+
+Package: libssh2-1-dev
+Conflicts: libssh2-0-dev
+Replaces: libssh2-0-dev
+Section: libdevel
+Architecture: any
+Depends: libssh2-1 (= ${binary:Version})
+Description: SSH2 client-side library (development headers)
+ libssh2 is the thin library implementing client side of SSH2 protocol
+ as defined by Internet Drafts SECSH-TRANS, SECSH-USERAUTH,
+ SECSH-CONNECTION, SECSH-ARCH, SECSH-FILEXFER, SECSH-DHGEX,
+ SECSH-NUMBERS, and SECSH-PUBLICKEY
+ .
+ This boils down to the regular terminal, scp and SFTP sessions; port
+ forwarding; password, key-based and keyboard-interactive
+ authentication.
+ .
+ This package contains the development files.
+
+Package: libssh2-1-dbg
+Section: libdevel
+Priority: extra
+Architecture: any
+Depends: libssh2-1 (= ${binary:Version}), libssh2-1-dev (= ${binary:Version})
+Description: SSH2 client-side library (debug package)
+ libssh2 is the thin library implementing client side of SSH2 protocol
+ as defined by Internet Drafts SECSH-TRANS, SECSH-USERAUTH,
+ SECSH-CONNECTION, SECSH-ARCH, SECSH-FILEXFER, SECSH-DHGEX,
+ SECSH-NUMBERS, and SECSH-PUBLICKEY
+ .
+ This boils down to the regular terminal, scp and SFTP sessions; port
+ forwarding; password, key-based and keyboard-interactive
+ authentication.
+ .
+ This package contains the debugging symbols.
