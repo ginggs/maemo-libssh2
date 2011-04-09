@@ -1,2 +1,1 @@
-disable_example_compilation.patch
-fix_manpage.patch
+man-wrong-nf-macro.patch

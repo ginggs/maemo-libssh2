@@ -1,7 +1,5 @@
 #!/usr/bin/make -f
 
-include /usr/share/quilt/quilt.make
-
 DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
@@ -13,28 +11,47 @@ else
 	CFLAGS += -O2
 endif
 
-configure: configure-stamp
-configure-stamp: patch
-	dh_testdir
-	touch $@
-
-config.status: configure
-	dh_testdir
-
-	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --with-libgcrypt
-
-build: build-stamp
-build-stamp: config.status
-	dh_testdir
-	$(MAKE)
-	touch build-stamp
+# Replaced by autoreconf
+KEEP_FILES=config.sub \
+	config.guess \
+	configure \
+	Makefile.in \
+	docs/Makefile.in \
+	example/Makefile.in \
+	src/Makefile.in \
+	tests/Makefile.in \
+	install-sh \
+	ltmain.sh \
+	aclocal.m4 \
+	m4/libtool.m4 \
+	m4/ltversion.m4 \
+	depcomp \
+	missing \
+	win32/libssh2.dsp \
+	ChangeLog
 
 clean:
 	dh_testdir
 	dh_testroot
 
 	[ ! -f Makefile ] || $(MAKE) distclean
-	-rm -f build-stamp configure-stamp
+
+	for i in $(KEEP_FILES); do \
+		if [ -f $$i.dist ]; then \
+			mv -f $$i.dist $$i; \
+		fi; \
+	done
+
+	dh_clean
+
+config.status:
+	dh_testdir
+
+	for i in $(KEEP_FILES); do \
+		if ! [ -f $$i.dist ]; then \
+			mv -f $$i $$i.dist; \
+		fi; \
+	done
 
 ifneq "$(wildcard /usr/share/misc/config.sub)" ""
 	cp -f /usr/share/misc/config.sub config.sub
@@ -43,12 +60,23 @@ ifneq "$(wildcard /usr/share/misc/config.guess)" ""
 	cp -f /usr/share/misc/config.guess config.guess
 endif
 
-	dh_clean
+	autoreconf -fi -I m4
+
+	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) \
+		--build=$(DEB_BUILD_GNU_TYPE) \
+		--prefix=/usr \
+		--with-libgcrypt
+
+build: build-stamp
+build-stamp: config.status
+	dh_testdir
+	$(MAKE)
+	touch build-stamp
 
 install: build
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs
 
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
@@ -60,8 +88,8 @@ binary-arch: build install
 	dh_testroot
 	dh_installdocs
 	dh_installchangelogs NEWS
-    # Install only examples, not the makefiles or makefile dependencies
-	dh_installexamples -X .deps -X Makefile
+    # Do not install auxiliary files
+	dh_installexamples -X .deps -X Makefile -X .gitignore
 	dh_installman
 	dh_install --sourcedir=debian/tmp
 	dh_link

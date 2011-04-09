@@ -1,1 +1,3 @@
-example/*
+example/*.c
+example/*.h.in
+example/Makefile*

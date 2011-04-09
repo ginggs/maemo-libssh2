@@ -1,2 +1,2 @@
 version=3
-http://sf.net/libssh2/libssh2-(.+)\.tar\.gz
+http://libssh2.org/download/libssh2-(.+)\.tar\.gz

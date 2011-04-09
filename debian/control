@@ -1,57 +1,41 @@
 Source: libssh2
 Section: libs
 Priority: optional
-Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
-Build-Depends: debhelper (>= 5), autotools-dev, libgcrypt11-dev, zlib1g-dev, quilt (>= 0.40)
-Standards-Version: 3.7.2
+Maintainer: Mikhail Gusarov <dottedmag@debian.org>
+Build-Depends: debhelper (>= 7), autotools-dev, automake, libtool, libgcrypt11-dev, zlib1g-dev
+Standards-Version: 3.9.1
 
 Package: libssh2-1
-Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: SSH2 client-side library
- libssh2 is the thin library implementing client side of SSH2 protocol
- as defined by Internet Drafts SECSH-TRANS, SECSH-USERAUTH,
- SECSH-CONNECTION, SECSH-ARCH, SECSH-FILEXFER, SECSH-DHGEX,
- SECSH-NUMBERS, and SECSH-PUBLICKEY
+ libssh2 is a client-side C library implementing the SSH2 protocol.
+ It supports regular terminal, SCP and SFTP sessions; port forwarding;
+ password, key-based and keyboard-interactive authentication.
  .
- This boils down to the regular terminal, scp and SFTP sessions; port
- forwarding; password, key-based and keyboard-interactive
- authentication.
- .
- This package contains the library.
+ This package contains the runtime library.
 
 Package: libssh2-1-dev
 Conflicts: libssh2-0-dev
 Replaces: libssh2-0-dev
 Section: libdevel
 Architecture: any
-Depends: libssh2-1 (= ${binary:Version})
+Depends: libssh2-1 (= ${binary:Version}), ${misc:Depends}
 Description: SSH2 client-side library (development headers)
- libssh2 is the thin library implementing client side of SSH2 protocol
- as defined by Internet Drafts SECSH-TRANS, SECSH-USERAUTH,
- SECSH-CONNECTION, SECSH-ARCH, SECSH-FILEXFER, SECSH-DHGEX,
- SECSH-NUMBERS, and SECSH-PUBLICKEY
- .
- This boils down to the regular terminal, scp and SFTP sessions; port
- forwarding; password, key-based and keyboard-interactive
- authentication.
+ libssh2 is a client-side C library implementing the SSH2 protocol.
+ It supports regular terminal, SCP and SFTP sessions; port forwarding;
+ password, key-based and keyboard-interactive authentication.
  .
  This package contains the development files.
 
 Package: libssh2-1-dbg
-Section: libdevel
+Section: debug
 Priority: extra
 Architecture: any
-Depends: libssh2-1 (= ${binary:Version}), libssh2-1-dev (= ${binary:Version})
+Depends: libssh2-1 (= ${binary:Version}), libssh2-1-dev (= ${binary:Version}), ${misc:Depends}
 Description: SSH2 client-side library (debug package)
- libssh2 is the thin library implementing client side of SSH2 protocol
- as defined by Internet Drafts SECSH-TRANS, SECSH-USERAUTH,
- SECSH-CONNECTION, SECSH-ARCH, SECSH-FILEXFER, SECSH-DHGEX,
- SECSH-NUMBERS, and SECSH-PUBLICKEY
- .
- This boils down to the regular terminal, scp and SFTP sessions; port
- forwarding; password, key-based and keyboard-interactive
- authentication.
+ libssh2 is a client-side C library implementing the SSH2 protocol.
+ It supports regular terminal, SCP and SFTP sessions; port forwarding;
+ password, key-based and keyboard-interactive authentication.
  .
  This package contains the debugging symbols.

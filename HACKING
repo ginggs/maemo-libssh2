@@ -9,24 +9,5 @@ libssh2 source code style guide:
          go_nuts();
      }
 
- - write both braces on the else line:
-
-     if (banana) {
-         go_nuts();
-     } else {
-         stay_calm();
-     }
-
- - use braces even for single-statement blocks
- 
  - keep source lines shorter than 80 columns
-
-------------
-
- Older libssh2 code that still hasn't quite transitioned to the above
- mentioned style, used a different style:
-
- - indented with tabs (only)
-
- - no line length limits
-
+ - See libssh2-style.el for how to achieve this within Emacs
