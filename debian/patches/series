@@ -1,2 +1,7 @@
-fix-version-in-pc.patch
+## NOT NEEDED IN MAEMO:
+#fix-version-in-pc.patch
+
 man-wrong-nf-macro.patch
+
+## MAEMO FIXES AND ENHANCEMENTS:
+hardcode-version-in-pc.patch

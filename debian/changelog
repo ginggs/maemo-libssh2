@@ -1,3 +1,12 @@
+libssh2 (1.2.8-2maemo1) fremantle; urgency=medium
+
+  * Packaged for Maemo.
+  * d/rules: Do not autoreconf, only copy config.sub and config.guess.
+    (Fixes FTBFS with libtool < 2)
+  * Hardcode version in pkg-config file.
+
+ -- Graham Inggs <graham@nerve.org.za>  Sun, 01 Mar 2015 13:56:59 +0200
+
 libssh2 (1.2.8-2) unstable; urgency=low
 
   * Fix version in pkg-config file (Closes: #637670).
