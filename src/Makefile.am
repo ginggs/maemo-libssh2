@@ -1,15 +1,10 @@
-# $Id: Makefile.am,v 1.10 2007/07/17 13:22:55 gknauf Exp $
+# $Id: Makefile.am,v 1.21 2009/05/07 17:21:56 bagder Exp $
 AUTOMAKE_OPTIONS = foreign nostdinc
 
-libssh2_la_SOURCES = channel.c comp.c crypt.c hostkey.c kex.c mac.c	\
-misc.c packet.c publickey.c scp.c session.c sftp.c userauth.c		\
-libssh2_priv.h openssl.h libgcrypt.h pem.c transport.c
+# Makefile.inc provides the CSOURCES and HHEADERS defines
+include ../Makefile.inc
 
-if LIBGCRYPT
-libssh2_la_SOURCES += libgcrypt.c
-else
-libssh2_la_SOURCES += openssl.c
-endif
+libssh2_la_SOURCES = $(CSOURCES) $(HHEADERS)
 
 EXTRA_DIST = libssh2_config.h.in NMakefile
 
@@ -18,9 +13,9 @@ lib_LTLIBRARIES = libssh2.la
 # srcdir/include for the shipped headers
 # builddir/src for the generated config header when building out of the source
 # tree
-INCLUDES = -I$(top_srcdir)/include -I$(top_builddir)/src
+AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/src
 
-VERSION=-version-info 1:0:0
+VERSION=-version-info 1:1:0
 
 # This flag accepts an argument of the form current[:revision[:age]]. So,
 # passing -version-info 3:12:1 sets current to 3, revision to 12, and age to
@@ -50,4 +45,6 @@ VERSION=-version-info 1:0:0
 # set age to 0. (c:r:a=0)
 #
 
-libssh2_la_LDFLAGS = $(VERSION) -no-undefined $(LTLIBGCRYPT)
+libssh2_la_LDFLAGS = $(VERSION) -no-undefined \
+	-export-symbols-regex '^libssh2_.*' \
+	$(LTLIBGCRYPT) $(LTLIBSSL) $(LTLIBZ)

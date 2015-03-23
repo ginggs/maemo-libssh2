@@ -4,6 +4,9 @@
 #ifndef WIN32
 #define WIN32
 #endif
+#ifndef _CRT_SECURE_NO_DEPRECATE
+#define _CRT_SECURE_NO_DEPRECATE 1
+#endif /* _CRT_SECURE_NO_DEPRECATE */
 #include <winsock2.h>
 #include <mswsock.h>
 #include <ws2tcpip.h>
@@ -16,43 +19,19 @@
 
 #define HAVE_WINSOCK2_H
 #define HAVE_IOCTLSOCKET
-
-/* same as WSABUF */
-struct iovec {
-	u_long iov_len;
-	char *iov_base;
-};
-
-#define inline __inline
-
-static inline int writev(int sock, struct iovec *iov, int nvecs)
-{
-	DWORD ret;
-	if (WSASend(sock, (LPWSABUF)iov, nvecs, &ret, 0, NULL, NULL) == 0) {
-		return ret;
-	}
-	return -1;
-}
-
-/* not really usleep, but safe for the way we use it in this lib */
-static inline int usleep(int udelay)
-{
-	Sleep(udelay / 1000);
-	return 0;
-}
+#define HAVE_SELECT
 
 #ifdef _MSC_VER
 #define snprintf _snprintf
+#if _MSC_VER < 1500
 #define vsnprintf _vsnprintf
+#endif
+#define strdup _strdup
 #define strncasecmp _strnicmp
 #define strcasecmp _stricmp
 #else
-#ifdef __MINGW32__
-#define WINSOCK_VERSION MAKEWORD(2,0)
-#else
 #define strncasecmp strnicmp
 #define strcasecmp stricmp
-#endif /* __MINGW32__ */
 #endif /* _MSC_VER */
 
 /* Compile in zlib support */
@@ -62,5 +41,4 @@ static inline int usleep(int udelay)
 #define LIBSSH2_DH_GEX_NEW 1
 
 #endif /* LIBSSH2_CONFIG_H */
-
 
